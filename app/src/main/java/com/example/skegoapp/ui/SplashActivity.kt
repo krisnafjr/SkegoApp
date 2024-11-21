@@ -1,9 +1,10 @@
-package com.example.skegoapp.view
+package com.example.skegoapp.ui
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.skegoapp.R
+import com.example.skegoapp.ui.onboarding.OnboardingActivity
 import kotlinx.coroutines.*
 
 class SplashActivity : AppCompatActivity() {
@@ -18,7 +19,7 @@ class SplashActivity : AppCompatActivity() {
             delay(splashDuration)
             withContext(Dispatchers.Main) {
                 // Pindah ke MainActivity
-                startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
+                startActivity(Intent(this@SplashActivity, OnboardingActivity::class.java))
                 finish()
             }
         }
