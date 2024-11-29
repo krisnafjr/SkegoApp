@@ -1,4 +1,4 @@
-package com.example.skegoapp.ui.main.ui.calendar
+package com.example.skegoapp.ui.main.calendar
 
 import android.os.Bundle
 import android.view.LayoutInflater

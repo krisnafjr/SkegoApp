@@ -5,4 +5,24 @@
     <string name="title_home">Home</string>
     <string name="title_task">Task</string>
     <string name="title_calendar">Calendar</string>
+
+    <string-array name="status_array">
+        <item>Not Started</item>
+        <item>On Progress</item>
+        <item>Finish</item>
+    </string-array>
+
+    <string-array name="category_array">
+        <item>WORK</item>
+        <item>SCHOOL</item>
+        <item>PERSONAL</item>
+    </string-array>
+
+    <string-array name="difficulty_array">
+        <item>LOW</item>
+        <item>MEDIUM</item>
+        <item>HIGH</item>
+    </string-array>
+
+
 </resources>

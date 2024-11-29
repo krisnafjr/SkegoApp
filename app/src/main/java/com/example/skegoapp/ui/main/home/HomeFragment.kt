@@ -1,4 +1,4 @@
-package com.example.skegoapp.ui.main.ui.home
+package com.example.skegoapp.ui.main.home
 
 import android.os.Bundle
 import android.view.LayoutInflater

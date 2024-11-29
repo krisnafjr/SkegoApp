@@ -1,4 +1,4 @@
-package com.example.skegoapp.ui.main.ui.task
+package com.example.skegoapp.ui.main.task
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

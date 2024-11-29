@@ -7,28 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.skegoapp.ui.main.ui.home.HomeFragment"
+        android:name="com.example.skegoapp.ui.main.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_task"
-        android:name="com.example.skegoapp.ui.main.ui.task.TaskFragment"
+        android:name="com.example.skegoapp.ui.main.task.TaskFragment"
         android:label="@string/title_task"
-        tools:layout="@layout/fragment_task" >
-        <action
-            android:id="@+id/action_taskFragment_to_addTaskFragment"
-            app:destination="@id/addTaskFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_task" />
 
     <fragment
         android:id="@+id/navigation_calendar"
-        android:name="com.example.skegoapp.ui.main.ui.calendar.CalendarFragment"
+        android:name="com.example.skegoapp.ui.main.calendar.CalendarFragment"
         android:label="@string/title_calendar"
         tools:layout="@layout/fragment_calendar" />
-    <fragment
-        android:id="@+id/addTaskFragment"
-        android:name="com.example.skegoapp.ui.main.ui.add_task.AddTaskFragment"
-        android:label="fragment_add_task"
-        tools:layout="@layout/fragment_add_task" />
 </navigation>

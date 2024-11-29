@@ -10,4 +10,16 @@
     //bg splash
     <color name="splash_background">#854300</color>
 
+    // color difficulty
+    <color name="red">#FF6072</color>
+    <color name="yellow">#FFD26D</color>
+    <color name="green">#9CE989</color>
+
+    // color category
+    <color name="blue">#8CD0FD</color>
+    <color name="orange">#FD9F8C</color>
+    <color name="purple">#C5A0CC</color>
+    <color name="gray">#C9C9C9</color>
+
+
 </resources>
