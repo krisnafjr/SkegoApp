@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Tema utama aplikasi -->
+    <style name="Theme.App" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Terapkan tema khusus untuk MaterialCalendar -->
+        <item name="materialCalendarTheme">@style/ThemeOverlay.App.DatePicker</item>
+    </style>
+
+    <!-- Tema khusus untuk MaterialCalendar -->
+    <style name="ThemeOverlay.App.DatePicker" parent="@style/ThemeOverlay.Material3.MaterialCalendar">
+        <!-- Warna utama (misalnya untuk header) -->
+        <item name="colorPrimary">#FFB332</item>
+        <item name="colorOnPrimary">#FFFFFF</item> <!-- Warna teks pada header -->
+
+        <!-- Warna dan bentuk untuk elemen yang lebih kecil -->
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent</item>
+
+    </style>
+
+
+
+
+
+    <!-- Bentuk untuk elemen kecil -->
+    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <!-- Bentuk untuk elemen medium -->
+    <style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.Material3.MediumComponent">
+        <item name="cornerSize">16dp</item>
+    </style>
+</resources>

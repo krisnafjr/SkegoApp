@@ -1,0 +1,105 @@
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- Ikon Jam -->
+        <ImageView
+            android:id="@+id/routine_logo"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_clock"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Waktu Rutin -->
+        <TextView
+            android:id="@+id/routine_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="11:30 AM - 12:30 PM"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="12sp"
+            android:textColor="#585A66"
+            app:layout_constraintStart_toEndOf="@id/routine_logo"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Judul Rutin -->
+        <TextView
+            android:id="@+id/routine_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Routine Title"
+            android:layout_marginTop="8dp"
+            android:textSize="18sp"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="#000000"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/routine_time" />
+
+        <!-- Deskripsi Rutin -->
+        <TextView
+            android:id="@+id/routine_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="A sales presentation with a potential client. The meeting is set to take place in London, and the a..."
+            android:textColor="#585A66"
+            android:fontFamily="@font/poppins_light"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/routine_title" />
+
+        <!-- Ikon Lokasi -->
+        <ImageView
+            android:id="@+id/iv_location_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_location"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/routine_description" />
+
+        <!-- Lokasi -->
+        <TextView
+            android:id="@+id/routine_location"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="London, UK"
+            android:textSize="14sp"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="#585A66"
+            app:layout_constraintStart_toEndOf="@id/iv_location_icon"
+            app:layout_constraintTop_toTopOf="@id/iv_location_icon"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Icon Options -->
+        <ImageView
+            android:id="@+id/ic_option"
+            android:layout_width="20dp"
+            android:layout_height="21dp"
+            android:src="@drawable/ic_options"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/routine_title" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

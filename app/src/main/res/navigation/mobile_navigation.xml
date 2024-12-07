@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_calendar"
-        android:name="com.example.skegoapp.ui.main.calendar.CalendarFragment"
+        android:name="com.example.skegoapp.ui.main.routine.RoutineFragment"
         android:label="@string/title_calendar"
-        tools:layout="@layout/fragment_calendar" />
+        tools:layout="@layout/fragment_routine" />
 </navigation>
