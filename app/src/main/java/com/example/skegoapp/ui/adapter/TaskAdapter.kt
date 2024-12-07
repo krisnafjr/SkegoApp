@@ -1,6 +1,5 @@
 package com.example.skegoapp.ui.adapter
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +9,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.skegoapp.R
-import com.example.skegoapp.data.Task
-import com.example.skegoapp.ui.color
+import com.example.skegoapp.data.pref.Task
 
 class TaskAdapter(
     private val tasks: List<Task>,
@@ -23,7 +21,6 @@ class TaskAdapter(
         val dueDate: TextView = itemView.findViewById(R.id.due_date)
         val priority: TextView = itemView.findViewById(R.id.task_difficulty)
         val taskType: TextView = itemView.findViewById(R.id.task_category)
-        val estimatedTime: TextView = itemView.findViewById(R.id.estimated_time)
         val statusSpinner: Spinner = itemView.findViewById(R.id.status_spinner)
 
         init {
@@ -45,7 +42,6 @@ class TaskAdapter(
         holder.taskTitle.text = currentTask.title
         holder.priority.text = currentTask.priority
         holder.taskType.text = currentTask.type
-        holder.estimatedTime.text = "Estimated Time \n ${currentTask.duration} HOURS"
         holder.dueDate.text = "Due ${currentTask.deadline}"
 
         // Set background color based on priority

@@ -5,6 +5,12 @@
     <string name="title_home">Home</string>
     <string name="title_task">Task</string>
     <string name="title_calendar">Calendar</string>
+    <string name="input_title_task">Title Task</string>
+    <string name="input_add_due_date">Add Due Date</string>
+    <string name="input_add_difficulty">Add Difficulty</string>
+    <string name="input_add_category">Add Category</string>
+    <string name="input_add_duration">Add Duration</string>
+    <string name="input_add_detail">Add Detail</string>
 
     <string-array name="status_array">
         <item>Not Started</item>
@@ -22,6 +28,13 @@
         <item>LOW</item>
         <item>MEDIUM</item>
         <item>HIGH</item>
+    </string-array>
+
+    <string-array name="duration_array">
+        <item>Kurang dari 1 Jam</item>
+        <item>1-3 Jam</item>
+        <item>4-6 Jam</item>
+        <item>Lebih dari 6 Jam</item>
     </string-array>
 
 

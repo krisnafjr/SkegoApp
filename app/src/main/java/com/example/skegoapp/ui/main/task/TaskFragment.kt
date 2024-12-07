@@ -9,10 +9,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.skegoapp.R
-import com.example.skegoapp.data.Task
+import com.example.skegoapp.data.pref.Task
 import com.example.skegoapp.databinding.FragmentTaskBinding
 import com.example.skegoapp.ui.adapter.TaskAdapter
 import com.example.skegoapp.ui.main.add_task.AddTaskActivity
@@ -62,8 +60,8 @@ class TaskFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        taskList.add(Task(1, "Create Database", "26 Nov", "26 November 2024", "HIGH", "WORK", 60, "On Progress", "Test"))
-        taskList.add(Task(2, "Fix Bugs", "28 Nov", "28 November 2024", "MEDIUM", "SCHOOL", 20, "Not Started", "Test"))
+        taskList.add(Task(1, "Create Database", "26 Nov", "26 November 2024", "HIGH", "WORK", "WORK", "On Progress", "Test"))
+        taskList.add(Task(2, "Fix Bugs", "28 Nov", "28 November 2024", "MEDIUM", "SCHOOL", "WORK", "Not Started", "Test"))
 
         taskAdapter = TaskAdapter(taskList) { task ->
             // Navigasi ke DetailTaskActivity saat item diklik

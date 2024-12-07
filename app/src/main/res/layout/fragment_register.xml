@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.onboarding.RegisterFragment"
+    tools:context=".ui.onboarding.register.RegisterFragment"
     android:background="@drawable/sky_bg">
 
     <!-- LinearLayout untuk Form Register -->
@@ -49,12 +49,12 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.example.skegoapp.ui.mycustomview.MyEditText
+                android:id="@+id/editTextName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_edittext"
                 android:hint="Full Name"
-                android:inputType="textEmailAddress"
                 android:textColor="#757575" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -64,7 +64,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.example.skegoapp.ui.mycustomview.MyEditText
+                android:id="@+id/editTextEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_edittext"
@@ -76,9 +77,11 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp">
+            android:layout_marginBottom="24dp"
+            app:endIconMode="password_toggle">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.example.skegoapp.ui.mycustomview.MyEditText
+                android:id="@+id/editTextPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_edittext"
@@ -98,24 +101,21 @@
             android:textSize="15sp" />
 
         <!-- Tombol Login -->
-        <Button
+        <com.example.skegoapp.ui.mycustomview.MyButton
             android:id="@+id/buttonRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_marginBottom="24dp"
-            android:backgroundTint="@color/orange_text"
             android:fontFamily="@font/poppins_bold"
             android:text="Sign Up"
-            android:textColor="@android:color/white"
-            app:cornerRadius="16dp" />
+            android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/textViewLoginAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_regular"
-            android:text="Already Have Account? Sign In!"
+            android:text="Already Have Account? Log In!"
             android:textColor="@color/black"
             android:textSize="15sp" />
 

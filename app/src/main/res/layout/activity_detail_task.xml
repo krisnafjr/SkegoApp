@@ -12,7 +12,6 @@
         android:layout_height="368dp"
         android:background="@drawable/shape_headline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
@@ -63,7 +62,6 @@
         android:id="@+id/task_priority_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="140dp"
         android:layout_marginTop="56dp"
         android:background="@drawable/shape_difficulty"
         android:fontFamily="@font/poppins_medium"
@@ -71,6 +69,8 @@
         android:text="HIGH"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.321"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -78,9 +78,7 @@
         android:id="@+id/task_category_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
         android:layout_marginTop="56dp"
-        android:layout_marginEnd="150dp"
         android:background="@drawable/shape_difficulty"
         android:fontFamily="@font/poppins_medium"
         android:padding="10dp"
@@ -88,7 +86,8 @@
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/task_priority_text_view"
+        app:layout_constraintHorizontal_bias="0.669"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView

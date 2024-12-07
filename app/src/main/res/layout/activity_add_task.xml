@@ -25,16 +25,16 @@
         android:id="@+id/title_task_input"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Title Task"
-        android:layout_marginTop="60dp"
         android:layout_marginStart="22dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="22dp"
+        android:hint="@string/input_title_task"
+        app:boxStrokeColor="@android:color/transparent"
+        app:hintAnimationEnabled="false"
+        app:hintEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:boxStrokeColor="@android:color/transparent"
-        app:hintEnabled="true"
-        app:hintAnimationEnabled="false">
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_title_task"
@@ -48,35 +48,35 @@
         android:id="@+id/due_date_input"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Add Due Date"
         android:layout_margin="22dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title_task_input"
+        android:hint="@string/input_add_due_date"
+        app:boxStrokeColor="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:boxStrokeColor="@android:color/transparent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_task_input">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_due_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="showDatePicker"
-            android:focusable="false"
             android:clickable="true"
-            android:inputType="none"/>
+            android:focusable="false"
+            android:inputType="none"
+            android:onClick="showDatePicker" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Add Difficulty Dropdown -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/difficulty_input"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Add Difficulty"
         android:layout_margin="22dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/due_date_input"
+        android:hint="@string/input_add_difficulty"
+        app:boxStrokeColor="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        app:boxStrokeColor="@android:color/transparent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/due_date_input">
 
         <AutoCompleteTextView
             android:id="@+id/dropdown_difficulty"
@@ -88,18 +88,36 @@
     <!-- Add Category Dropdown -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/category_input"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Add Category"
         android:layout_margin="22dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/difficulty_input"
+        android:hint="@string/input_add_category"
+        app:boxStrokeColor="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        app:boxStrokeColor="@android:color/transparent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/difficulty_input">
 
         <AutoCompleteTextView
             android:id="@+id/dropdown_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/duration_input"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="22dp"
+        android:hint="@string/input_add_duration"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/category_input">
+
+        <AutoCompleteTextView
+            android:id="@+id/dropdown_duration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none" />
@@ -110,12 +128,12 @@
         android:id="@+id/detail_input"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Add Detail"
-        android:layout_margin ="22dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/category_input"
+        android:layout_margin="22dp"
+        android:hint="@string/input_add_detail"
+        app:boxStrokeColor="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:boxStrokeColor="@android:color/transparent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/duration_input">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_detail"

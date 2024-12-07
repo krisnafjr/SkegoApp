@@ -1,17 +1,11 @@
 package com.example.skegoapp.ui.main.detail_task
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.skegoapp.R
-import com.example.skegoapp.data.Task
+import com.example.skegoapp.data.pref.Task
 
 class DetailTaskActivity : AppCompatActivity() {
     private lateinit var task: Task
