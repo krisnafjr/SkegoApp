@@ -1,11 +1,14 @@
 package com.example.skegoapp.data.remote.retrofit
 
+import com.example.skegoapp.data.pref.ForgotPasswordRequest
 import com.example.skegoapp.data.pref.LoginRequest
 import com.example.skegoapp.data.pref.RegisterRequest
 import com.example.skegoapp.data.pref.Routine
+import com.example.skegoapp.data.remote.response.ForgotPasswordResponse
 import com.example.skegoapp.data.remote.response.LoginResponse
 import com.example.skegoapp.data.remote.response.RegisterResponse
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -23,6 +26,9 @@ interface ApiService {
     suspend fun loginUser(
         @Body loginRequest: LoginRequest
     ): LoginResponse
+
+    @POST("users/change-password")
+    suspend fun changePassword(@Body body: ForgotPasswordRequest): Response<ForgotPasswordResponse>
 
     @GET("routines")
     fun getRoutines(): Call<List<Routine>>

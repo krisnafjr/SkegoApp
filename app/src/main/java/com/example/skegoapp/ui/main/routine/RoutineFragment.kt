@@ -15,6 +15,7 @@ import com.example.skegoapp.ui.main.add_routine.AddRoutineActivity
 import com.example.skegoapp.data.remote.retrofit.ApiConfig
 import com.example.skegoapp.data.pref.Routine
 import com.example.skegoapp.ui.adapter.CalendarAdapter
+import com.example.skegoapp.ui.main.home.ProfileActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -46,6 +47,7 @@ class RoutineFragment : Fragment() {
         setupMonthNavigation()
         setupCalendarButton()
         setupAddRoutineButton()
+        setupMenuButton()
 
         return root
     }
@@ -86,6 +88,14 @@ class RoutineFragment : Fragment() {
     private fun highlightToday() {
         val today = Calendar.getInstance().time
         monthCalendarAdapter.highlightDate(today) // Highlight today's date
+    }
+
+    private fun setupMenuButton() {
+        binding.iconMenu.setOnClickListener {
+            // Start ProfileActivity when the menu icon is clicked
+            val intent = Intent(requireContext(), ProfileActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun setupCalendarButton() {

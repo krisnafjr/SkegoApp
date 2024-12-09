@@ -22,6 +22,11 @@ class UserRepository private constructor(
         userPreference.logout()
     }
 
+    // If you want to check login status from repository
+    suspend fun isLoggedIn(): Boolean {
+        return userPreference.isLoggedIn()
+    }
+
     companion object {
         @Volatile
         private var instance: UserRepository? = null
@@ -35,4 +40,5 @@ class UserRepository private constructor(
             }.also { instance = it }
     }
 }
+
 

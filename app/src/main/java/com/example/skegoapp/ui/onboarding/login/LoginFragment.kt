@@ -66,6 +66,11 @@ class LoginFragment : Fragment() {
         spannableString.setSpan(colorSpan, 20, 30, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         binding.textViewCreateAccount.text = spannableString
 
+        binding.textViewForgotPassword.setOnClickListener {
+            // Navigasi ke ForgotPasswordFragment
+            findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
+        }
+
         binding.textViewCreateAccount.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
             requireActivity().supportFragmentManager.popBackStack()

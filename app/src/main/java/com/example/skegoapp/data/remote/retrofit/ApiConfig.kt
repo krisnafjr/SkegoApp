@@ -10,22 +10,24 @@ object ApiConfig {
     private const val BASE_URL = "http://34.101.163.68:5000/api/"
 
     fun getApiService(): ApiService {
-        val loggingInterceptor = HttpLoggingInterceptor()
-        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY // Logs the request and response body
+        val loggingInterceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
 
         val client = OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)  // Add logging to the client
+            .addInterceptor(loggingInterceptor)
             .build()
 
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
-            .client(client) // Use the configured client with logging
+            .client(client)
             .build()
 
         return retrofit.create(ApiService::class.java)
     }
 }
+
 
 
 

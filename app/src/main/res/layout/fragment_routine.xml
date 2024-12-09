@@ -14,8 +14,9 @@
             android:layout_height="24dp"
             android:layout_marginStart="16dp"
             android:background="@android:color/transparent"
-            android:contentDescription="Menu Icon"
-            android:src="@drawable/ic_menu"
+            android:contentDescription="Profile Icon"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_profile"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -71,12 +72,12 @@
             android:id="@+id/month_navigation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
             android:gravity="center"
-            app:layout_constraintTop_toBottomOf="@id/current_date"
-            app:layout_constraintStart_toStartOf="parent"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/current_date">
 
             <ImageButton
                 android:id="@+id/prev_month"
@@ -90,9 +91,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
+                android:text="Month Year"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
-                android:text="Month Year"
                 android:textStyle="bold" />
 
             <ImageButton
@@ -109,9 +110,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:orientation="horizontal"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
-            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/month_navigation" />

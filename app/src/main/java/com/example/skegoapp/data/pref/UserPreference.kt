@@ -9,6 +9,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.Flow
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.intPreferencesKey
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
 
@@ -17,7 +18,8 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
     suspend fun saveSession(user: UserModel) {
         dataStore.edit { preferences ->
             preferences[EMAIL_KEY] = user.email
-            preferences[PASSWORD_KEY] = user.password
+            preferences[USERNAME_KEY] = user.username
+            preferences[USER_ID_KEY] = user.userId
             preferences[IS_LOGIN_KEY] = true
         }
     }
@@ -26,23 +28,33 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         return dataStore.data.map { preferences ->
             UserModel(
                 email = preferences[EMAIL_KEY] ?: "",
-                password = preferences[PASSWORD_KEY] ?: "",
+                username = preferences[USERNAME_KEY] ?: "",
+                userId = preferences[USER_ID_KEY] ?: 0,
                 isLogin = preferences[IS_LOGIN_KEY] ?: false
             )
         }
     }
 
     suspend fun logout() {
-        dataStore.edit { preferences ->
-            preferences.clear()
-        }
+        dataStore.edit { preferences -> preferences.clear() }
     }
+
+    // Function to check if the user is logged in
+    suspend fun isLoggedIn(): Boolean {
+        var isLoggedIn = false
+        getSession().collect { user ->
+            isLoggedIn = user.isLogin
+        }
+        return isLoggedIn
+    }
+
 
     companion object {
         @Volatile
         private var INSTANCE: UserPreference? = null
         private val EMAIL_KEY = stringPreferencesKey("email")
-        private val PASSWORD_KEY = stringPreferencesKey("password")
+        private val USERNAME_KEY = stringPreferencesKey("username")
+        private val USER_ID_KEY = intPreferencesKey("userId")
         private val IS_LOGIN_KEY = booleanPreferencesKey("isLogin")
 
         fun getInstance(dataStore: DataStore<Preferences>): UserPreference {

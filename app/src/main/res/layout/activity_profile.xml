@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="380dp"
+        android:background="@drawable/shape_headline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btn_back"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="22dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="Menu Icon"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_back"
+        app:tint="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.026"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/hello_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="112dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Hello,"
+        android:textColor="#FFFFFF"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/username_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:text="User"
+        android:textColor="#FFFFFF"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hello_text_view" />
+
+    <TextView
+        android:id="@+id/email_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+        android:text="user@gmail.com"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/username_text_view" />
+
+    <!-- About LinearLayout -->
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="96dp"
+        android:layout_marginEnd="20dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view">
+
+        <ImageView
+            android:id="@+id/icon_reset_password"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:contentDescription="@string/reset_password_icon"
+            android:src="@drawable/ic_reset_password" />
+
+        <TextView
+            android:id="@+id/text_reset_password"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:text="Reset Password"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/icon_arrow_reset_password"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:contentDescription="@string/arrow_icon"
+            android:src="@drawable/ic_arrow_right" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <ImageView
+            android:id="@+id/icon_about"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:contentDescription="@string/about_icon"
+            android:src="@drawable/ic_about" />
+
+        <TextView
+            android:id="@+id/text_about"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:text="About"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/icon_arrow_about"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:contentDescription="@string/arrow_icon"
+            android:src="@drawable/ic_arrow_right" />
+    </LinearLayout>
+
+
+    <com.example.skegoapp.ui.mycustomview.MyButton
+        android:id="@+id/button_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Logout"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
