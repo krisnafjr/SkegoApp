@@ -10,10 +10,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.skegoapp.R
 import com.example.skegoapp.data.pref.Task
+import java.text.SimpleDateFormat
+import java.util.*
 
 class TaskAdapter(
     private val tasks: List<Task>,
-    private val itemClickListener: (Task) -> Unit // Listener untuk item click
+    private val itemClickListener: (Task) -> Unit // Listener untuk item klik
 ) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -39,26 +41,28 @@ class TaskAdapter(
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val currentTask = tasks[position]
 
-        holder.taskTitle.text = currentTask.title
-        holder.priority.text = currentTask.priority
-        holder.taskType.text = currentTask.type
-        holder.dueDate.text = "Due ${currentTask.deadline}"
+        // Set data untuk setiap elemen tampilan
+        holder.taskTitle.text = currentTask.task_name ?: "No Task Name"
+        holder.dueDate.text = "Due: ${formatDeadline(currentTask.deadline)}"
+        holder.priority.text = currentTask.difficulty_level.toString()
+        holder.taskType.text = currentTask.category
 
-        // Set background color based on priority
+        // Set background warna untuk difficultyLevel
         holder.priority.setBackgroundColor(
             holder.itemView.context.getColor(
-                when (currentTask.priority) {
-                    "HIGH" -> R.color.red
-                    "MEDIUM" -> R.color.yellow
-                    "LOW" -> R.color.green
+                when (currentTask.difficulty_level) {
+                    1 -> R.color.red
+                    2 -> R.color.yellow
+                    3 -> R.color.green
                     else -> R.color.gray
                 }
             )
         )
 
+        // Set background warna untuk kategori
         holder.taskType.setBackgroundColor(
             holder.itemView.context.getColor(
-                when (currentTask.type) {
+                when (currentTask.category.uppercase()) {
                     "WORK" -> R.color.blue
                     "SCHOOL" -> R.color.orange
                     "PERSONAL" -> R.color.purple
@@ -67,7 +71,7 @@ class TaskAdapter(
             )
         )
 
-        // Set the status spinner
+        // Setup Spinner untuk status
         val statusAdapter = ArrayAdapter.createFromResource(
             holder.itemView.context,
             R.array.status_array,
@@ -76,11 +80,11 @@ class TaskAdapter(
         statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         holder.statusSpinner.adapter = statusAdapter
 
-        // Set current selection for the spinner
+        // Set status spinner ke nilai yang sesuai
         val statusPosition = statusAdapter.getPosition(currentTask.status)
         holder.statusSpinner.setSelection(statusPosition)
 
-        // Listen for status change
+        // Update status saat spinner dipilih
         holder.statusSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
@@ -89,8 +93,10 @@ class TaskAdapter(
                 id: Long
             ) {
                 val newStatus = parent.getItemAtPosition(position).toString()
-                // Update the task status
-                currentTask.status = newStatus
+                if (currentTask.status != newStatus) {
+                    currentTask.status = newStatus
+                    // Anda dapat menambahkan logika untuk menyimpan perubahan status ke server/DB
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
@@ -98,5 +104,16 @@ class TaskAdapter(
     }
 
     override fun getItemCount(): Int = tasks.size
-}
 
+    private fun formatDeadline(deadline: String): String {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+        inputFormat.timeZone = TimeZone.getTimeZone("UTC")
+        val outputFormat = SimpleDateFormat("dd/MM/yy", Locale.getDefault())
+        return try {
+            val date = inputFormat.parse(deadline)
+            date?.let { outputFormat.format(it) } ?: "Invalid Date"
+        } catch (e: Exception) {
+            "Invalid Date"
+        }
+    }
+}

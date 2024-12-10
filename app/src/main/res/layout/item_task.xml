@@ -19,16 +19,16 @@
 
         <TextView
             android:id="@+id/task_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_medium"
             android:text="Create Database"
             android:textColor="#000000"
             android:textSize="18sp"
-            app:layout_constraintEnd_toStartOf="@+id/due_date"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
 
         <TextView
             android:id="@+id/due_date"

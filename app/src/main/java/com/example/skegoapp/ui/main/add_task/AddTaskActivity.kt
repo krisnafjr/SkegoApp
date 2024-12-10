@@ -1,46 +1,38 @@
 package com.example.skegoapp.ui.main.add_task
 
 import android.app.DatePickerDialog
-import android.app.TimePickerDialog
-import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.skegoapp.R
 import com.example.skegoapp.data.pref.Task
+import com.example.skegoapp.data.pref.UserPreference
+import com.example.skegoapp.data.pref.dataStore
+import com.example.skegoapp.data.remote.retrofit.ApiConfig
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
-import java.util.UUID
+import java.util.*
 
 class AddTaskActivity : AppCompatActivity() {
+
+    private lateinit var userPreference: UserPreference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_task)
 
-        // Tombol Back
-        findViewById<ImageButton>(R.id.btn_back).setOnClickListener {
-            onBackPressed()
-        }
+        // Initialize UserPreference with DataStore
+        userPreference = UserPreference.getInstance(applicationContext.dataStore)
 
-        // Inisialisasi dropdown
+        findViewById<ImageButton>(R.id.btn_back).setOnClickListener { onBackPressed() }
         setupDropdowns()
+        findViewById<Button>(R.id.btn_save).setOnClickListener { saveTask() }
 
-        // Tombol Save
-        findViewById<Button>(R.id.btn_save).setOnClickListener {
-            saveTask()
-        }
-
-        // Input Due Date
         val dueDateEditText = findViewById<TextInputEditText>(R.id.et_due_date)
         dueDateEditText.apply {
             isFocusable = false
@@ -50,23 +42,19 @@ class AddTaskActivity : AppCompatActivity() {
     }
 
     private fun setupDropdowns() {
-        // Dropdown untuk Difficulty
-        val difficultyArray = resources.getStringArray(R.array.difficulty_array)
-        val difficultyAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, difficultyArray)
-        findViewById<AutoCompleteTextView>(R.id.dropdown_difficulty).setAdapter(difficultyAdapter)
+        setupDropdown(R.id.dropdown_difficulty, R.array.difficulty_array)
+        setupDropdown(R.id.dropdown_category, R.array.category_array)
+        setupDropdown(R.id.dropdown_duration, R.array.duration_array)
+    }
 
-        // Dropdown untuk Category
-        val categoryArray = resources.getStringArray(R.array.category_array)
-        val categoryAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, categoryArray)
-        findViewById<AutoCompleteTextView>(R.id.dropdown_category).setAdapter(categoryAdapter)
-
-        // Dropdown untuk Duration
-        val durationArray = resources.getStringArray(R.array.duration_array)
-        val durationAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, durationArray)
-        findViewById<AutoCompleteTextView>(R.id.dropdown_duration).setAdapter(durationAdapter)
+    private fun setupDropdown(viewId: Int, arrayId: Int) {
+        val array = resources.getStringArray(arrayId)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, array)
+        findViewById<AutoCompleteTextView>(viewId).setAdapter(adapter)
     }
 
     private fun saveTask() {
+        // Input fields
         val title = findViewById<TextInputEditText>(R.id.et_title_task).text.toString()
         val dueDate = findViewById<TextInputEditText>(R.id.et_due_date).text.toString()
         val difficulty = findViewById<AutoCompleteTextView>(R.id.dropdown_difficulty).text.toString()
@@ -74,64 +62,90 @@ class AddTaskActivity : AppCompatActivity() {
         val duration = findViewById<AutoCompleteTextView>(R.id.dropdown_duration).text.toString()
         val detail = findViewById<TextInputEditText>(R.id.et_detail).text.toString()
 
-        // Validasi input
+        // Validation
         if (title.isEmpty() || dueDate.isEmpty() || difficulty.isEmpty() || category.isEmpty() || duration.isEmpty()) {
             Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             return
         }
 
-        // Format tanggal
-        val formattedDueDate = formatDueDate(dueDate)
-        val fullFormattedDueDate = formatFullDueDate(dueDate)
+        // Get userId from UserPreference
+        lifecycleScope.launch {
+            val user = userPreference.getSession().collect { userModel ->
+                val userId = userModel.userId
 
-        // Buat objek Task baru
-        val newTask = Task(
-            id = UUID.randomUUID().hashCode(),
-            title = title,
-            deadline = formattedDueDate,
-            fullDeadline = fullFormattedDueDate,
-            priority = difficulty,
-            type = category,
-            duration = duration,
-            status = "Not Started",
-            detail = detail
-        )
+                try {
+                    val formattedDueDate = formatDueDate(dueDate)
+                    val daysUntilDeadline = calculateDaysUntilDeadline(dueDate)
 
-        // Kirim data kembali ke TaskFragment
-        setResult(RESULT_OK, Intent().putExtra("newTask", newTask))
-        finish()
+                    val newTask = Task(
+                        idTask = 0, // Will be replaced by server
+                        user_id = userId,
+                        task_name = title,
+                        difficulty_level = difficulty.toIntOrNull() ?: 1,
+                        deadline = formattedDueDate,
+                        duration = duration.toIntOrNull() ?: 0,
+                        priorityScore = calculatePriorityScore(difficulty, duration),
+                        status = "pending",
+                        category = category,
+                        detail = detail,
+                        hourOfDay = 22, // Adjust as needed
+                        dayOfWeek = Calendar.getInstance().get(Calendar.DAY_OF_WEEK),
+                        daysUntilDeadline = daysUntilDeadline,
+                        createdAt = "", // Will be set by server
+                        updatedAt = null
+                    )
+
+                    val apiService = ApiConfig.getApiService()
+                    apiService.addTask(newTask).enqueue(object : Callback<Task> {
+                        override fun onResponse(call: Call<Task>, response: Response<Task>) {
+                            if (response.isSuccessful) {
+                                Toast.makeText(this@AddTaskActivity, "Task added successfully!", Toast.LENGTH_SHORT).show()
+                                setResult(RESULT_OK)
+                                finish()
+                            } else {
+                                Toast.makeText(this@AddTaskActivity, "Failed to add task: ${response.message()}", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
+                        override fun onFailure(call: Call<Task>, t: Throwable) {
+                            Toast.makeText(this@AddTaskActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                        }
+                    })
+                } catch (e: Exception) {
+                    Toast.makeText(this@AddTaskActivity, "Invalid data: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     private fun formatDueDate(dueDate: String): String {
         return try {
             val inputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("dd MMM", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             outputFormat.format(inputFormat.parse(dueDate)!!)
         } catch (e: Exception) {
-            dueDate
+            dueDate // Return the original value if formatting fails
         }
     }
 
-    private fun formatFullDueDate(dueDate: String): String {
-        return try {
-            val inputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
-            outputFormat.format(inputFormat.parse(dueDate)!!)
-        } catch (e: Exception) {
-            dueDate
-        }
+    private fun calculateDaysUntilDeadline(dueDate: String): Int {
+        val currentDate = Calendar.getInstance().time
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val due = sdf.parse(dueDate)
+        val diff = due.time - currentDate.time
+        return (diff / (1000 * 60 * 60 * 24)).toInt()
+    }
+
+    private fun calculatePriorityScore(difficulty: String, duration: String): Int {
+        return (difficulty.toIntOrNull() ?: 1) * (duration.toIntOrNull() ?: 1)
     }
 
     private fun showDatePicker() {
         val calendar = Calendar.getInstance()
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-
-        DatePickerDialog(this, { _, selectedYear, selectedMonth, selectedDay ->
-            val dueDateEditText = findViewById<TextInputEditText>(R.id.et_due_date)
-            dueDateEditText.setText(String.format("%02d/%02d/%d", selectedDay, selectedMonth + 1, selectedYear))
-        }, year, month, day).show()
+        DatePickerDialog(this, { _, year, month, day ->
+            findViewById<TextInputEditText>(R.id.et_due_date).setText(
+                String.format("%02d/%02d/%d", day, month + 1, year)
+            )
+        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show()
     }
 }
-

@@ -30,10 +30,10 @@ class DetailTaskActivity : AppCompatActivity() {
     }
 
     private fun displayTaskDetails(task: Task) {
-        findViewById<TextView>(R.id.task_name_text_view).text = task.title
-        findViewById<TextView>(R.id.task_date_text_view).text = task.fullDeadline
-        findViewById<TextView>(R.id.task_priority_text_view).text = task.priority
-        findViewById<TextView>(R.id.task_category_text_view).text = task.type
+        findViewById<TextView>(R.id.task_name_text_view).text = task.task_name
+        findViewById<TextView>(R.id.task_date_text_view).text = task.deadline
+        findViewById<TextView>(R.id.task_priority_text_view).text = task.difficulty_level.toString()
+        findViewById<TextView>(R.id.task_category_text_view).text = task.category
         findViewById<TextView>(R.id.task_detail_text_view).text = task.detail
     }
 
