@@ -8,5 +8,6 @@ data class Routine(
     @SerializedName("time_routine") val time: String,
     val location: String,
     @SerializedName("decs_routine") val detail: String,
-    @SerializedName("type_routine") val category: String
+    @SerializedName("type_routine") val category: String,
+    @SerializedName("user_id") val userId: Int
 )

@@ -2,6 +2,7 @@ package com.example.skegoapp.ui.adapter
 
 import android.animation.ObjectAnimator
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import com.example.skegoapp.data.pref.Routine
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 class CalendarAdapter(
     private val daysInMonth: List<Date>,
@@ -24,22 +26,26 @@ class CalendarAdapter(
     private var highlightedDate: Date? = null
     private val today: String = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
 
+    private val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    private val dayFormat = SimpleDateFormat("EEE", Locale.getDefault())
+    private val shortDateFormat = SimpleDateFormat("dd", Locale.getDefault())
+    private val apiDateTimeFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault()).apply {
+        timeZone = TimeZone.getTimeZone("UTC")
+    }
+
     inner class CalendarViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val dayTextView: TextView = itemView.findViewById(R.id.text_day)
         private val dateTextView: TextView = itemView.findViewById(R.id.text_date)
         private val categoryDot: View = itemView.findViewById(R.id.category_dot)
 
         fun bind(date: Date) {
-            val dayFormat = SimpleDateFormat("EEE", Locale.getDefault())
-            val dateFormat = SimpleDateFormat("dd", Locale.getDefault())
-            val fullDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-
-            val isToday = fullDateFormat.format(date) == today
-            val isHighlighted = highlightedDate != null && fullDateFormat.format(date) == fullDateFormat.format(highlightedDate)
+            val formattedDate = dateFormat.format(date)
+            val isToday = formattedDate == today
+            val isHighlighted = highlightedDate != null && formattedDate == dateFormat.format(highlightedDate)
 
             // Set day and date text
             dayTextView.text = dayFormat.format(date)
-            dateTextView.text = dateFormat.format(date)
+            dateTextView.text = shortDateFormat.format(date)
 
             // Update background and text color based on state
             when {
@@ -66,15 +72,17 @@ class CalendarAdapter(
                 dateTextView.setTextColor(ContextCompat.getColor(itemView.context, R.color.blue))
             }
 
-            // Normalize and check routines
-            val apiDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
-            val dateOnlyFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-
-            val formattedDate = dateOnlyFormat.format(date)
+            // Check if routine exists for this date
             val routineExists = routines.any { routine ->
-                val apiDate = apiDateFormat.parse(routine.date)
-                val normalizedApiDate = apiDate?.let { dateOnlyFormat.format(it) }
-                normalizedApiDate == formattedDate
+                try {
+                    val apiDate = apiDateTimeFormat.parse(routine.date)
+                    val normalizedApiDate = apiDate?.let { dateFormat.format(it) }
+                    Log.d("CalendarAdapter", "Routine Date: $normalizedApiDate, Calendar Date: $formattedDate")
+                    normalizedApiDate == formattedDate
+                } catch (e: Exception) {
+                    Log.e("CalendarAdapter", "Error parsing date: ${routine.date}", e)
+                    false
+                }
             }
 
             // Show or hide category dot
@@ -110,6 +118,7 @@ class CalendarAdapter(
     }
 
     override fun getItemCount(): Int = daysInMonth.size
+
 
     fun highlightDate(date: Date) {
         highlightedDate = date

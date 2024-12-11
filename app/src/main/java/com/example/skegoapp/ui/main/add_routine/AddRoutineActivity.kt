@@ -7,6 +7,8 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.skegoapp.data.pref.Routine
+import com.example.skegoapp.data.pref.UserPreference
+import com.example.skegoapp.data.pref.dataStore
 import com.example.skegoapp.data.remote.retrofit.ApiConfig
 import com.example.skegoapp.databinding.ActivityAddRoutineBinding
 import retrofit2.Call
@@ -14,6 +16,9 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 class AddRoutineActivity : AppCompatActivity() {
 
@@ -98,27 +103,33 @@ class AddRoutineActivity : AppCompatActivity() {
             return
         }
 
-        // Membuat objek Routine untuk disimpan
-        val routine = Routine(title, date, time, location, detail, category)
+        // Retrieve userId from UserPreference
+        MainScope().launch {
+            val userPreference = UserPreference.getInstance(applicationContext.dataStore)
+            val userSession = userPreference.getSession().first()  // Get the user session data
+            val userId = userSession.userId  // Extract userId
 
-        // Menggunakan Retrofit untuk mengirim data ke server
-        ApiConfig.getApiService().addRoutine(routine).enqueue(object : Callback<Routine> {
-            override fun onResponse(call: Call<Routine>, response: Response<Routine>) {
-                if (response.isSuccessful) {
-                    Toast.makeText(this@AddRoutineActivity, "Routine added successfully", Toast.LENGTH_SHORT).show()
+            // Create Routine object with the retrieved userId
+            val routine = Routine(title, date, time, location, detail, category, userId)
 
-                    // Notify RoutineFragment to update the calendar
-                    setResult(RESULT_OK)  // Optionally pass the data if needed
-                    finish() // Kembali ke layar sebelumnya
-                } else {
-                    Toast.makeText(this@AddRoutineActivity, "Failed to add routine", Toast.LENGTH_SHORT).show()
+            // Send routine to server via Retrofit
+            ApiConfig.getApiService().addRoutine(routine).enqueue(object : Callback<Routine> {
+                override fun onResponse(call: Call<Routine>, response: Response<Routine>) {
+                    if (response.isSuccessful) {
+                        Toast.makeText(this@AddRoutineActivity, "Routine added successfully", Toast.LENGTH_SHORT).show()
+
+                        // Notify RoutineFragment to update the calendar
+                        setResult(RESULT_OK)  // Optionally pass the data if needed
+                        finish() // Kembali ke layar sebelumnya
+                    } else {
+                        Toast.makeText(this@AddRoutineActivity, "Failed to add routine", Toast.LENGTH_SHORT).show()
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<Routine>, t: Throwable) {
-                Toast.makeText(this@AddRoutineActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
-            }
-        })
+                override fun onFailure(call: Call<Routine>, t: Throwable) {
+                    Toast.makeText(this@AddRoutineActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
     }
 }
-

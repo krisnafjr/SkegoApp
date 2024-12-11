@@ -48,6 +48,20 @@ interface ApiService {
     @DELETE("routines/{id}")
     fun deleteRoutine(@Path("id") id: Int): Call<Void>
 
+    @GET("routines")
+    suspend fun getRoutinesByUserId(
+        @Query("user_id") userId: Int
+    ): Response<List<Routine>>
+
+
+    @GET("routines")
+    suspend fun getRoutinesByUserIdAndDate(
+        @Query("user_id") userId: Int,
+        @Query("date_routine") dateRoutine: String
+    ): Response<List<Routine>>
+
+
+
     @POST("tasks")
     fun addTask(@Body task: Task): Call<Task>
 
@@ -59,4 +73,5 @@ interface ApiService {
 
     @DELETE("tasks/{id}")
     fun deleteTask(@Path("id") id: Int): Call<Void>
+
 }

@@ -1,5 +1,6 @@
 package com.example.skegoapp.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +17,9 @@ class RoutineAdapter(private val routineList: List<Routine>) :
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_routine, parent, false)
         return RoutineViewHolder(view)
+
     }
+
 
     // Bind the data to the ViewHolder
     override fun onBindViewHolder(holder: RoutineViewHolder, position: Int) {
@@ -27,6 +30,7 @@ class RoutineAdapter(private val routineList: List<Routine>) :
         holder.routineLocation.text = routine.location
         holder.routineDetail.text = routine.detail
         //holder.routineCategory.text = routine.category
+
     }
 
     // Return the total count of items
