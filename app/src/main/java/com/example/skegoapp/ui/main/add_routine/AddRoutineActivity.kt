@@ -14,7 +14,6 @@ import com.example.skegoapp.databinding.ActivityAddRoutineBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.first
@@ -91,6 +90,7 @@ class AddRoutineActivity : AppCompatActivity() {
      * Fungsi untuk menyimpan rutinitas
      */
     private fun saveRoutine() {
+        val routineId =""
         val title = binding.etTitleRoutine.text.toString().trim()
         val date = binding.etDate.text.toString().trim()
         val time = binding.etTime.text.toString().trim()
@@ -110,7 +110,7 @@ class AddRoutineActivity : AppCompatActivity() {
             val userId = userSession.userId  // Extract userId
 
             // Create Routine object with the retrieved userId
-            val routine = Routine(title, date, time, location, detail, category, userId)
+            val routine = Routine(routineId, title, date, time, location, detail, category, userId)
 
             // Send routine to server via Retrofit
             ApiConfig.getApiService().addRoutine(routine).enqueue(object : Callback<Routine> {
@@ -131,5 +131,6 @@ class AddRoutineActivity : AppCompatActivity() {
                 }
             })
         }
+
     }
 }

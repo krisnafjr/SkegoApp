@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiConfig {
 
-    private const val BASE_URL = "https://backend-skego-619804298613.asia-southeast2.run.app/"
+    private const val BASE_URL = "https://backend-skego-619804298613.asia-southeast2.run.app/api/"
 
     fun getApiService(): ApiService {
         val loggingInterceptor = HttpLoggingInterceptor().apply {

@@ -79,13 +79,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/current_date">
 
+            <!-- Previous Month Button -->
             <ImageButton
                 android:id="@+id/prev_month"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/ic_back"
-                android:contentDescription="Previous Month" />
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Previous Month"
+                android:src="@drawable/ic_back" />
 
+            <!-- Month Display -->
             <TextView
                 android:id="@+id/month_display"
                 android:layout_width="wrap_content"
@@ -96,12 +99,14 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
+            <!-- Next Month Button -->
             <ImageButton
                 android:id="@+id/next_month"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/ic_arrow_next"
-                android:contentDescription="Next Month" />
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Next Month"
+                android:src="@drawable/ic_arrow_next" />
         </LinearLayout>
 
         <!-- Horizontal Calendar -->
@@ -139,6 +144,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/background_shape" />
+
+        <!-- ProgressBar for Routine -->
+        <ProgressBar
+            android:id="@+id/loadingSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:indeterminate="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Floating Action Button -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton

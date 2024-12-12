@@ -40,13 +40,8 @@ interface ApiService {
     @POST("routines")
     fun addRoutine(@Body routine: Routine): Call<Routine>
 
-    // Mendapatkan detail rutinitas berdasarkan ID
-    @GET("routines/{id}")
-    fun getRoutineById(@Path("id") id: Int): Call<Routine>
-
-    // Menghapus rutinitas berdasarkan ID
     @DELETE("routines/{id}")
-    fun deleteRoutine(@Path("id") id: Int): Call<Void>
+    fun deleteRoutine(@Path("id") routineId: String): Call<Void>
 
     @GET("routines")
     suspend fun getRoutinesByUserId(

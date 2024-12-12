@@ -25,8 +25,6 @@ class DetailTaskActivity : AppCompatActivity() {
         // Tampilkan detail task
         displayTaskDetails(task)
 
-        // Set up button listeners
-        setupButtonListeners()
     }
 
     private fun displayTaskDetails(task: Task) {
@@ -37,8 +35,5 @@ class DetailTaskActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.task_detail_text_view).text = task.detail
     }
 
-    private fun setupButtonListeners() {
-        // Hapus tombol edit dan hapus jika tidak diperlukan
-        // Jika Anda ingin menambahkan logika lain, silakan sesuaikan di sini
-    }
+
 }

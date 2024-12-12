@@ -16,6 +16,9 @@
         android:theme="@style/Theme.SkegoApp"
         tools:targetApi="31">
         <activity
+            android:name=".ui.main.detail_routine.DetailRoutineActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.main.home.ProfileActivity"
             android:exported="false" />
         <activity
@@ -29,8 +32,8 @@
             android:exported="false" />
         <activity
             android:name=".ui.main.MainActivity"
-            android:theme="@style/Theme.App.MaterialComponents"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.App.MaterialComponents" />
         <activity
             android:name=".ui.onboarding.OnboardingActivity"
             android:exported="false" />

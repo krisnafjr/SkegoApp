@@ -1,5 +1,6 @@
 package com.example.skegoapp.ui.main.routine
 
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import com.example.skegoapp.data.remote.retrofit.ApiConfig
 import com.example.skegoapp.data.pref.Routine
 import com.example.skegoapp.data.pref.UserPreference
 import com.example.skegoapp.data.pref.dataStore
+import com.example.skegoapp.data.remote.retrofit.ApiService
 import com.example.skegoapp.ui.adapter.CalendarAdapter
 import com.example.skegoapp.ui.main.home.ProfileActivity
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -41,7 +43,6 @@ class RoutineFragment : Fragment() {
         _binding = FragmentRoutineBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-
         // Initialize user preference to get user data
         userPreference = UserPreference.getInstance(requireContext().dataStore)
 
@@ -59,9 +60,17 @@ class RoutineFragment : Fragment() {
         checkUserSession()
 
         return root
-
-
     }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK) {
+            // Refresh routines when a new routine is added
+            checkUserSession()  // Re-fetch routines from the API
+        }
+    }
+
 
     /**
      * Checks if the user is logged in and loads routines accordingly.
@@ -78,7 +87,6 @@ class RoutineFragment : Fragment() {
             }
         }
     }
-
 
     /**
      * Sets up the horizontal calendar for the current month.
@@ -195,6 +203,9 @@ class RoutineFragment : Fragment() {
      * Loads routines from the API for a particular user and date (optional).
      */
     private fun loadRoutines(userId: Int, date: String? = null) {
+        // Show the progress bar while loading routines
+        binding.loadingSpinner.visibility = View.VISIBLE
+
         lifecycleScope.launch {
             try {
                 val response = if (date != null) {
@@ -205,21 +216,25 @@ class RoutineFragment : Fragment() {
 
                 if (response.isSuccessful) {
                     routines = response.body() ?: emptyList()
-                    updateRoutineList(routines)
+                    updateRoutineList(routines, ApiConfig.getApiService()) // Pass apiService here
                 } else {
                     Toast.makeText(requireContext(), "Failed to load routines", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 Toast.makeText(requireContext(), "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            } finally {
+                // Hide the progress bar after the operation is completed
+                binding.loadingSpinner.visibility = View.GONE
             }
         }
     }
 
+
     /**
      * Updates the list of routines in the RecyclerView.
      */
-    private fun updateRoutineList(routines: List<Routine>) {
-        routineAdapter = RoutineAdapter(routines) // Pass context to the adapter
+    private fun updateRoutineList(routines: List<Routine>, apiService: ApiService) {
+        routineAdapter = RoutineAdapter(routines.toMutableList(), apiService)  // Pass only routineList and apiService
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = routineAdapter
     }
@@ -231,9 +246,11 @@ class RoutineFragment : Fragment() {
         binding.addRoutine.setOnClickListener {
             // Intent to open the AddRoutineActivity
             val intent = Intent(requireContext(), AddRoutineActivity::class.java)
-            startActivity(intent)
+            startActivityForResult(intent, 1)
         }
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()

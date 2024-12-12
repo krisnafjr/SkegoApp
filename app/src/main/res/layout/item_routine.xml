@@ -89,17 +89,17 @@
             app:layout_constraintTop_toTopOf="@id/iv_location_icon"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Icon Options -->
+        <!-- Icon Options (Dropdown) -->
         <ImageView
             android:id="@+id/ic_option"
-            android:layout_width="20dp"
-            android:layout_height="21dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:src="@drawable/ic_options"
+            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/routine_title" />
-
-
+            android:clickable="true"
+            android:focusable="true" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
